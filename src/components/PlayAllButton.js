@@ -1,4 +1,5 @@
 import React from "react"
+import "../styles/playAllButton.css"
 
 class PlayAllButton extends React.Component {
 	constructor(props) {

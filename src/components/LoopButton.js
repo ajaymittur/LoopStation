@@ -9,7 +9,11 @@ class LoopButton extends React.Component {
 		}
 	}
 	render() {
-		return <button type="button" className="loop" />
+		return (
+			<button type="button" className="loop">
+				{this.state.id}
+			</button>
+		)
 	}
 }
 

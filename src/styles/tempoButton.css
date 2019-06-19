@@ -1,0 +1,9 @@
+.tempo {
+	background-color: #26547c;
+	color: #ffd166;
+	height: 80px;
+	width: 150px;
+	border: 0.2em #06d6a0 solid;
+	border-radius: 8px;
+	font-size: 1.5em;
+}

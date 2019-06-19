@@ -1,4 +1,5 @@
 import React from "react"
+import "../styles/clearAllButton.css"
 
 class ClearAllButton extends React.Component {
 	constructor(props) {

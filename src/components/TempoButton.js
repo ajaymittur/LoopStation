@@ -1,4 +1,5 @@
 import React from "react"
+import "../styles/tempoButton.css"
 
 class TempoButton extends React.Component {
 	constructor(props) {
