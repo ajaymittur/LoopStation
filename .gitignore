@@ -1,0 +1,7 @@
+#dependencies
+node_modules/
+package.json
+package-lock.json
+
+#misc
+plan.md
