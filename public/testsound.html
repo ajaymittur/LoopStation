@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Test Sound record</title>
+	</head>
+	<body>
+		<button type="button" onclick="record()" class="record">record</button>
+		<button type="button" onclick="stop()" class="stop">stop</button>
+		<button type="button" onclick="play()" class="play">play</button>
+
+		<script>
+			let recorder
+			let chunks = []
+			let audio
+
+			navigator.mediaDevices
+				.getUserMedia({ audio: true })
+				.then(stream => {
+					recorder = new MediaRecorder(stream)
+				})
+				.then(() => {
+					recorder.addEventListener("dataavailable", event => {
+						chunks.push(event.data)
+					})
+				})
+				.then(() => {
+					recorder.addEventListener("stop", () => {
+						const audioBlob = new Blob(chunks)
+						const audioUrl = URL.createObjectURL(audioBlob)
+						audio = new Audio(audioUrl)
+						chunks = []
+					})
+				})
+
+			function record() {
+				recorder.start()
+				console.log("recording audio")
+			}
+
+			function stop() {
+				recorder.stop()
+				console.log("stopping recording")
+			}
+
+			function play() {
+				audio.play()
+				console.log("playing audio")
+			}
+		</script>
+	</body>
+</html>
