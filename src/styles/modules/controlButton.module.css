@@ -1,0 +1,33 @@
+.normal {
+	background-color: #ef476f;
+	color: #fffcf9;
+	height: 80px;
+	width: 150px;
+	/* border: 0.2em #06d6a0 solid; */
+	border: 0;
+	border-radius: 8px;
+	font-size: 1.5em;
+	outline: 0;
+}
+
+.clicked {
+	background-color: #fffcf9;
+	color: #ef476f;
+	height: 80px;
+	width: 150px;
+	border: 4px #ef476f solid;
+	border-radius: 8px;
+	font-size: 1.5em;
+	outline: 0;
+}
+
+.normal:active {
+	background-color: #fffcf9;
+	color: #ef476f;
+	height: 80px;
+	width: 150px;
+	border: 4px #ef476f solid;
+	border-radius: 8px;
+	font-size: 1.5em;
+	outline: 0;
+}
