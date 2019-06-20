@@ -4,22 +4,24 @@
 }
 
 body {
-	background-color: #ef476f;
+	/* initial background color */
+	/* background-color: #e9e2e3; */
+	background-color: #26547c;
 }
 
-#wrapper {
+#main-wrapper {
 	display: grid;
 	grid-template-rows: auto auto;
 	height: 100vh;
 }
 
-#control-buttons {
+#control-buttons-wrapper {
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
 }
 
-#loop-buttons {
+#loop-buttons-wrapper {
 	display: flex;
 	justify-content: space-around;
 	grid-row: 2 / 3;
