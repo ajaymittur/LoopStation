@@ -12,32 +12,37 @@ class Sound {
 			.then(audioStream => {
 				this.recorder = new MediaRecorder(audioStream)
 				this.recorder.ondataavailable = e => {
-					chunks.push(e.data)
+					this.audioChunks.push(e.data)
 				}
 				this.recorder.onstop = () => {
-					const audioBlob = new Blob(chunks)
+					const audioBlob = new Blob(this.audioChunks)
 					const audioUrl = URL.createObjectURL(audioBlob)
 					this.audio.src = audioUrl
+					this.audio.loop = true
 					this.audioChunks = []
 				}
 			})
 			.catch(e => console.log(e))
 	}
 
-	record() {
+	record = () => {
 		this.recorder.start()
 	}
 
-	stop() {
+	stop = () => {
 		this.recorder.stop()
 	}
 
-	play() {
+	play = () => {
 		this.audio.play()
 	}
 
-	pause() {
+	pause = () => {
 		this.audio.pause()
+	}
+
+	clearAudio = () => {
+		this.audio.src = null
 	}
 }
 
