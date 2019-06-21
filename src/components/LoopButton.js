@@ -25,7 +25,9 @@ class LoopButton extends React.Component {
 	}
 
 	handleSingleClick = () => {
-		this.checkSoundMethodToCall().then(methodToCall => methodToCall())
+		this.checkSoundMethodToCall()
+			.then(methodToCall => methodToCall())
+			.catch(e => console.log(e))
 		this.setState(currentState => {
 			// Change previous modes ie. shift them to the left
 			// by 1 position in a circular manner
@@ -56,15 +58,47 @@ class LoopButton extends React.Component {
 	}
 
 	handleDoubleClick = () => {
-		this.audioManager.clearAudio()
-		this.setState(currentState => {
-			return {
-				style: loopButtonStyle.normal,
-				modes: [...this.initialModes],
-				mode: this.initialModes[0]
-			}
-		})
+		this.audioManager.clear()
+		this.setState(() => ({
+			style: loopButtonStyle.normal,
+			modes: [...this.initialModes],
+			mode: this.initialModes[0]
+		}))
 	}
+
+	componentWillReceiveProps(newProps) {
+		if (newProps.shouldPlayAll) {
+			this.setState(() => ({
+				style: loopButtonStyle.clicked,
+				modes: ["Play", "Pause", "Record", "Stop"],
+				mode: "Play"
+			}))
+			this.audioManager.play()
+		} else {
+			this.setState(() => ({
+				style: loopButtonStyle.normal,
+				modes: ["Pause", "Record", "Stop", "Play"],
+				mode: "Pause"
+			}))
+			this.audioManager.pause()
+		}
+		if (newProps.shouldClearAll) {
+			this.handleDoubleClick()
+		}
+	}
+
+	// Lifecycle method below keeps updating until maximum stack depth is reached
+	// if setState() is used as it keeps calling itself (until max recursion depth)
+	// componentDidUpdate() {
+	// 	if (this.props.shouldPlayAll) {
+	// 		this.audioManager.play()
+	// 	} else {
+	// 		this.audioManager.pause()
+	// 	}
+	// 	if (this.props.shouldClearAll) {
+	// 		this.audioManager.clear()
+	// 	}
+	// }
 
 	render() {
 		return (
@@ -73,7 +107,7 @@ class LoopButton extends React.Component {
 				className={this.state.style}
 				onClick={this.handleSingleClick}
 				onDoubleClick={this.handleDoubleClick}>
-				{this.state.modes[0]}
+				{this.state.mode}
 			</button>
 		)
 	}

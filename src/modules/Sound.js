@@ -41,7 +41,7 @@ class Sound {
 		this.audio.pause()
 	}
 
-	clearAudio = () => {
+	clear = () => {
 		this.audio.src = null
 	}
 }
