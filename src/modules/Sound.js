@@ -3,6 +3,8 @@ class Sound {
 		this.recorder = null
 		this.audioChunks = []
 		this.audio = new Audio()
+		this.audioSrc = null
+		this.playPromise = null
 		this.initialize()
 	}
 
@@ -17,7 +19,7 @@ class Sound {
 				this.recorder.onstop = () => {
 					const audioBlob = new Blob(this.audioChunks)
 					const audioUrl = URL.createObjectURL(audioBlob)
-					this.audio.src = audioUrl
+					this.audio.src = this.audioSrc = audioUrl
 					this.audio.loop = true
 					this.audioChunks = []
 				}
@@ -34,11 +36,14 @@ class Sound {
 	}
 
 	play = () => {
-		this.audio.play()
+		this.playPromise = this.audio.play()
+		return this.playPromise
 	}
 
 	pause = () => {
-		this.audio.pause()
+		this.playPromise
+			.then(() => this.audio.pause())
+			.catch(e => console.log(e.name + ": " + e.message))
 	}
 
 	clear = () => {

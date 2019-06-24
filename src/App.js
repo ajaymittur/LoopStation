@@ -18,13 +18,13 @@ class App extends React.Component {
 	playPauseAll = () => {
 		this.setState(currentState => ({
 			shouldPlayAll: !currentState.shouldPlayAll,
-			shouldClearAll: currentState.shouldClearAll
+			shouldClearAll: false
 		}))
 	}
 
 	clearAll = () => {
 		this.setState(currentState => ({
-			shouldPlayAll: currentState.shouldPlayAll,
+			shouldPlayAll: false,
 			shouldClearAll: !currentState.shouldClearAll
 		}))
 	}

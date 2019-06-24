@@ -20,14 +20,14 @@ class LoopButton extends React.Component {
 			else if (this.state.mode === "Stop") resolve(this.audioManager.stop)
 			else if (this.state.mode === "Play") resolve(this.audioManager.play)
 			else if (this.state.mode === "Pause") resolve(this.audioManager.pause)
-			else reject("Error: Incorrect Button Mode")
+			else reject(Error("Error: Incorrect Button Mode"))
 		})
 	}
 
 	handleSingleClick = () => {
 		this.checkSoundMethodToCall()
 			.then(methodToCall => methodToCall())
-			.catch(e => console.log(e))
+			.catch(e => console.log(e.name + ": " + e.message))
 		this.setState(currentState => {
 			// Change previous modes ie. shift them to the left
 			// by 1 position in a circular manner
@@ -70,19 +70,34 @@ class LoopButton extends React.Component {
 		if (newProps.shouldPlayAll) {
 			this.setState(() => ({
 				style: loopButtonStyle.clicked,
-				modes: ["Play", "Pause", "Record", "Stop"],
-				mode: "Play"
-			}))
-			this.audioManager.play()
-		} else {
-			this.setState(() => ({
-				style: loopButtonStyle.normal,
 				modes: ["Pause", "Record", "Stop", "Play"],
 				mode: "Pause"
 			}))
-			this.audioManager.pause()
-		}
-		if (newProps.shouldClearAll) {
+			// catch below is required to catch
+			// DOMEcxeption: The play() request was interrupted
+			// audio.play() returns a promise which throws the error when rejected
+			// https://goo.gl/LdLk22 (More on this error)
+			if (this.audioManager.audioSrc !== null) {
+				this.audioManager
+					.play()
+					.catch(e => console.log(e.name + ": " + e.message))
+			}
+			// console.log(this.audioManager.audio.src)
+		} else if (!newProps.shouldPlayAll && this.state.mode !== "Record") {
+			this.setState(() => ({
+				style: loopButtonStyle.normal,
+				modes: ["Play", "Pause", "Record", "Stop"],
+				mode: "Play"
+			}))
+			// Fix to the error mentioned above
+			// Old code: this.audioManager.pause()
+			if (this.audioManager.audioSrc !== null) {
+				this.audioManager
+					.play()
+					.then(() => this.audioManager.pause())
+					.catch(e => console.log(e.name + ": " + e.message))
+			}
+		} else {
 			this.handleDoubleClick()
 		}
 	}
