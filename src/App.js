@@ -5,20 +5,53 @@ import ClearAllButton from "./components/ClearAllButton"
 import LoopButton from "./components/LoopButton"
 import "./styles/index.css"
 
-export default function App() {
-	let loop_button_ids = [1, 2, 3, 4]
-	return (
-		<div id="wrapper">
-			<div id="control-buttons">
-				<PlayAllButton />
-				<TempoButton />
-				<ClearAllButton />
+class App extends React.Component {
+	constructor() {
+		super()
+		this.loop_button_ids = [1, 2, 3, 4]
+		this.state = {
+			shouldPlayAll: false,
+			shouldClearAll: false
+		}
+	}
+
+	playPauseAll = () => {
+		this.setState(currentState => ({
+			shouldPlayAll: !currentState.shouldPlayAll,
+			shouldClearAll: false
+		}))
+	}
+
+	clearAll = () => {
+		this.setState(currentState => ({
+			shouldPlayAll: false,
+			shouldClearAll: !currentState.shouldClearAll
+		}))
+	}
+
+	render() {
+		return (
+			<div id="main-wrapper">
+				<div id="control-buttons-wrapper">
+					<PlayAllButton
+						handleClick={this.playPauseAll}
+						reset={this.state.shouldClearAll}
+					/>
+					<TempoButton />
+					<ClearAllButton handleClick={this.clearAll} />
+				</div>
+				<div id="loop-buttons-wrapper">
+					{this.loop_button_ids.map(index => (
+						<LoopButton
+							key={index}
+							shouldPlayAll={this.state.shouldPlayAll}
+							shouldClearAll={this.state.shouldClearAll}
+						/>
+					))}
+				</div>
 			</div>
-			<div id="loop-buttons">
-				{loop_button_ids.map(id => (
-					<LoopButton id={id} />
-				))}
-			</div>
-		</div>
-	)
+		)
+	}
 }
+
+export default App

@@ -1,14 +1,17 @@
 import React from "react"
-import "../styles/clearAllButton.css"
+import buttonStyle from "../styles/modules/controlButton.module.css"
 
 class ClearAllButton extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {}
+	handleClick = () => {
+		this.props.handleClick()
 	}
+
 	render() {
 		return (
-			<button type="button" className="clearall">
+			<button
+				type="button"
+				className={buttonStyle.normal}
+				onClick={this.handleClick}>
 				Clear All
 			</button>
 		)

@@ -1,15 +1,42 @@
 import React from "react"
-import "../styles/playAllButton.css"
+import buttonStyle from "../styles/modules/controlButton.module.css"
 
 class PlayAllButton extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {}
+		this.state = {
+			style: buttonStyle.normal,
+			mode: "Play All"
+		}
 	}
+
+	handleClick = () => {
+		this.props.handleClick()
+		this.setState(currentState => ({
+			style:
+				currentState.style === buttonStyle.normal
+					? buttonStyle.clicked
+					: buttonStyle.normal,
+			mode: currentState.mode === "Play All" ? "Pause All" : "Play All"
+		}))
+	}
+
+	componentWillReceiveProps(newProps) {
+		if (newProps.reset) {
+			this.setState({
+				style: buttonStyle.normal,
+				mode: "Play All"
+			})
+		}
+	}
+
 	render() {
 		return (
-			<button type="button" className="playall">
-				Play All
+			<button
+				type="button"
+				className={this.state.style}
+				onClick={this.handleClick}>
+				{this.state.mode}
 			</button>
 		)
 	}
