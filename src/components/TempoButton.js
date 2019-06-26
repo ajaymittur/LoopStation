@@ -6,7 +6,8 @@ class TempoButton extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			style: buttonStyle.normal
+			style: buttonStyle.normal,
+			bpms: [100, 120, 140, 60, 80]
 		}
 		this.tempoPlayer = new Sound(true)
 	}
@@ -17,10 +18,27 @@ class TempoButton extends React.Component {
 				currentState.style === buttonStyle.normal
 					? buttonStyle.clicked
 					: buttonStyle.normal
+			// bpms: currentState.bpms
 		}))
 		if (this.state.style === buttonStyle.normal)
 			this.tempoPlayer.play().catch(e => console.log(e.name + ": " + e.message))
-		else this.tempoPlayer.load()
+		// Reload metronome audio
+		else {
+			this.tempoPlayer.load()
+			this.tempoPlayer.tempo(this.state.bpms[0])
+		}
+	}
+
+	handleDoubleClick = async () => {
+		await this.setState(currentState => {
+			currentState.bpms.push(currentState.bpms.shift())
+			return {
+				style: buttonStyle.normal,
+				bpms: currentState.bpms
+			}
+		})
+		this.tempoPlayer.load()
+		this.tempoPlayer.tempo(this.state.bpms[0])
 	}
 
 	render() {
@@ -28,8 +46,10 @@ class TempoButton extends React.Component {
 			<button
 				type="button"
 				className={this.state.style}
-				onClick={this.handleClick}>
+				onClick={this.handleClick}
+				onDoubleClick={this.handleDoubleClick}>
 				Tempo
+				<p>{this.state.bpms[0]}</p>
 			</button>
 		)
 	}

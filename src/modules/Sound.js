@@ -60,6 +60,12 @@ class Sound {
 	load = () => {
 		this.audio.load()
 	}
+
+	tempo(speed) {
+		let relativeSpeed = speed / 100
+		console.log(relativeSpeed)
+		this.audio.playbackRate = relativeSpeed
+	}
 }
 
 export { Sound }
