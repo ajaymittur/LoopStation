@@ -21,6 +21,15 @@ class PlayAllButton extends React.Component {
 		}))
 	}
 
+	componentWillReceiveProps(newProps) {
+		if (newProps.reset) {
+			this.setState({
+				style: buttonStyle.normal,
+				mode: "Play All"
+			})
+		}
+	}
+
 	render() {
 		return (
 			<button

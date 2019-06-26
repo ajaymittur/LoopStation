@@ -33,7 +33,10 @@ class App extends React.Component {
 		return (
 			<div id="main-wrapper">
 				<div id="control-buttons-wrapper">
-					<PlayAllButton handleClick={this.playPauseAll} />
+					<PlayAllButton
+						handleClick={this.playPauseAll}
+						reset={this.state.shouldClearAll}
+					/>
 					<TempoButton />
 					<ClearAllButton handleClick={this.clearAll} />
 				</div>
