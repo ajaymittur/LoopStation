@@ -23,10 +23,19 @@ class App extends React.Component {
 	}
 
 	clearAll = () => {
-		this.setState(currentState => ({
-			shouldPlayAll: false,
-			shouldClearAll: !currentState.shouldClearAll
-		}))
+		// using promises to control asynchronous character of setState
+		// async await can also be used
+		Promise.resolve(
+			this.setState(currentState => ({
+				shouldPlayAll: false,
+				shouldClearAll: !currentState.shouldClearAll
+			}))
+		).then(() => {
+			this.setState(currentState => ({
+				shouldPlayAll: false,
+				shouldClearAll: !currentState.shouldClearAll
+			}))
+		})
 	}
 
 	render() {
