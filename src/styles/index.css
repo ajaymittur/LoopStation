@@ -1,12 +1,17 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
+
 * {
 	margin: 0;
 	padding: 0;
 }
 
 body {
-	/* initial background color */
-	/* background-color: #e9e2e3; */
+	background-image: url("https://images.unsplash.com/photo-1465833981072-cc099edacfc1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1052&q=80");
 	background-color: #26547c;
+}
+
+button {
+	font-family: "Raleway", sans-serif;
 }
 
 #main-wrapper {
