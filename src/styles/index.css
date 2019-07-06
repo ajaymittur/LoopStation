@@ -12,6 +12,8 @@ body {
 
 button {
 	font-family: "Raleway", sans-serif;
+	font-weight: bold;
+	background: url("../../src/assets/buttonbackground.jpg");
 }
 
 #main-wrapper {

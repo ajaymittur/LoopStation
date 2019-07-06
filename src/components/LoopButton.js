@@ -126,6 +126,12 @@ class LoopButton extends React.Component {
 				onClick={this.handleSingleClick}
 				onDoubleClick={this.handleDoubleClick}>
 				{this.state.mode}
+				<div className={loopButtonStyle.animationWrapper}>
+					<div className={loopButtonStyle.ripple}>
+						<div />
+						<div />
+					</div>
+				</div>
 			</button>
 		)
 	}
